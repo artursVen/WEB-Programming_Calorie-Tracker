@@ -1,0 +1,23 @@
+# Python virtuālā vide
+.venv/
+
+# Python pagaidu faili
+__pycache__/
+*.py[cod]
+
+# Vides mainīgie un paroles
+.env
+.env.*
+!.env.example
+
+# Django
+db.sqlite3
+staticfiles/
+*.log
+
+# VS Code
+.vscode/
+
+# Windows
+Thumbs.db
+Desktop.ini
