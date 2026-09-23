@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
 from .forms import FoodEntryForm
@@ -50,5 +50,43 @@ def dashboard(request):
     return render(
         request,
         "calories/dashboard.html",
+        context,
+    )
+    
+@login_required
+def edit_food_entry(request, entry_id):
+    food_entry = get_object_or_404(
+        FoodEntry,
+        id=entry_id,
+        user=request.user,
+    )
+    
+    if request.method == "POST":
+        form = FoodEntryForm(
+            request.POST,
+            instance=food_entry,
+        )
+        
+        if form.is_valid():
+            form.save()
+            
+            messages.success(
+                request,
+                "Pārtikas ieraksts veiksmīgi atjaunināts.",
+            )
+            
+            return redirect("calories:dashboard")
+    
+    else:
+        form = FoodEntryForm(instance=food_entry)
+        
+    context = {
+        "form": form,
+        "food_entry": food_entry,
+    }
+    
+    return render(
+        request,
+        "calories/edit_entry.html",
         context,
     )

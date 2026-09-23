@@ -56,7 +56,9 @@
                         <th>Maltīte</th>
                         <th>Daudzums gramos</th>
                         <th>Kalorijas uz 100g</th>
-                        <th>Kopā kcal</th>                            <th>Laiks</th>
+                        <th>Kopā kcal</th>
+                        <th>Laiks</th>
+                        <th>Darbības</th>
                     </tr>
                 </thead>
 
@@ -69,6 +71,11 @@
                             <td>{{ entry.calories_per_100g }} kcal</td>
                             <td>{{ entry.total_calories|floatformat:2 }}</td>
                             <td>{{ entry.consumed_at|date:"H:i" }}</td>
+                            <td>
+                                <a href="{% url 'calories:edit_entry' entry.id %}">
+                                    Rediģēt
+                                </a>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

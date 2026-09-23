@@ -1,0 +1,30 @@
+{% extends "calories/base.html" %}
+
+{% block title %}
+    Rediģēt ierakstu
+{% endblock %}
+
+{% block content %}
+    <section>
+        <h2>Rediģēt pārtikas ierakstu</h2>
+
+        <p>
+            Tiek rediģēts ieraksts:
+            <strong>{{ food_entry.name }}</strong>
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit">
+                Saglabāt izmaiņas
+            </button>
+
+            <a href="{% url 'calories:dashboard' %}">
+                Atcelt
+            </a>
+        </form>
+    </section>
+{% endblock %}
