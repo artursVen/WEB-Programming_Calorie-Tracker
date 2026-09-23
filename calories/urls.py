@@ -6,5 +6,5 @@ from . import views
 app_name = "calories"
 
 urlpatterns = [
-    path("", views.dashborad, name="dashboard"),
+    path("", views.dashboard, name="dashboard"),
 ]

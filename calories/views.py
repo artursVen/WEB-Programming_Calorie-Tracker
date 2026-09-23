@@ -10,7 +10,7 @@ from .models import FoodEntry
 
 
 @login_required
-def dashborad(request):
+def dashboard(request):
     if request.method == "POST":
         form = FoodEntryForm(request.POST)
         
@@ -25,30 +25,30 @@ def dashborad(request):
             )
             
             return redirect("calories:dashboard")
-        else:
-            form = FoodEntryForm()
+    else:
+        form = FoodEntryForm()
             
-        today = timezone.localdate()
+    today = timezone.localdate()
         
-        food_entries = FoodEntry.objects.filter(
-            user=request.user,
-            consumed_at__date=today,
-        )
+    food_entries = FoodEntry.objects.filter(
+        user=request.user,
+        consumed_at__date=today,
+    )
         
-        total_calories = sum(
-            (entry.total_calories for entry in food_entries),
-            Decimal("0.00"),
-        )
+    total_calories = sum(
+        (entry.total_calories for entry in food_entries),
+        Decimal("0.00"),
+    )
         
-        context = {
-            "form": form,
-            "food_entries": food_entries,
-            "total_calories": total_calories,
-            "today": today,
-        }
+    context = {
+        "form": form,
+        "food_entries": food_entries,
+        "total_calories": total_calories,
+        "today": today,
+    }
         
-        return render(
-            request,
-            "calories/dashboard.html",
-            context,
-        )
+    return render(
+        request,
+        "calories/dashboard.html",
+        context,
+    )

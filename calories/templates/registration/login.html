@@ -1,0 +1,39 @@
+{% extends "calories/base.html" %}
+
+{% block title %}
+    Pieteikšanās
+{% endblock %}
+
+{% block content %}
+    <section>
+        <h2>Pieteikšanās</h2>
+
+        {% if form.errors %}
+            <p class="message error">
+                Nepareizi ievadīts lietotājvārds vai parole.
+            </p>
+        {% endif %}
+
+        {% if next %}
+            <p>
+                Lai atvērtu lapu, vispirms veiciet pieteikšanos.
+            </p>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <input 
+                type="hidden" 
+                name="next" 
+                value="{{ next }}"
+            >
+
+            <button type="submit">
+                Pieteikties
+            </button>
+        </form>
+    </section>
+{% endblock %}
