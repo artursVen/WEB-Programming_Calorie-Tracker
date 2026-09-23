@@ -1,0 +1,82 @@
+{% extends "calories/base.html" %}
+
+{% block title %}
+    Dienas kalorijas
+{% endblock %}
+
+{% block content %}
+    <section>
+        <h2>
+            Labdien, {{request.user.username}}!
+        </h2>
+
+        <p>
+            Datums: {{ today|date:"d.m.Y" }}
+        </p>
+    </section>
+
+    {% if messages %}
+        <section aria-label="Paziņojumi">
+            {% for message in messages %}
+                <p class="message {{ message.tags }}">
+                    {{ message }}
+                </p>
+            {% endfor %}
+        </section>
+    {% endif %}
+
+    <section>
+        <h2>Pievienot pārtikas ierakstu</h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit">Pievienot ierakstu</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Šodienas kopsavilkums</h2>
+
+        <p>
+            Kopā: <strong>{{ total_calories|floatformat:2 }} kcal</strong>
+        </p>
+    </section>
+
+    <section>
+        <h2>Šodienas pārtikas ieraksti</h2>
+
+        {% if food_entries %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Produkts</th>
+                        <th>Maltīte</th>
+                        <th>Daudzums gramos</th>
+                        <th>Kalorijas uz 100g</th>
+                        <th>Kopā kcal</th>                            <th>Laiks</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for entry in food_entries %}
+                        <tr>
+                            <td>{{ entry.name }}</td>
+                            <td>{{ entry.get_meal_type_display }}</td>
+                            <td>{{ entry.quantity_grams }} g</td>
+                            <td>{{ entry.calories_per_100g }} kcal</td>
+                            <td>{{ entry.total_calories|floatformat:2 }}</td>
+                            <td>{{ entry.consumed_at|date:"H:i" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>
+                Šodien vēl nav pievienots neviens pārtikas ieraksts.
+            </p>
+        {% endif %}
+    </section>
+{% endblock %}
