@@ -1,0 +1,44 @@
+{% extends "calories/base.html" %}
+
+{% block title %}
+    Dzēst ierakstu
+{% endblock %}
+
+{% block content %}
+    <section>
+        <h2>Dzēst pārtikas ierakstu</h2>
+
+        <p>
+            Vai tiešām vēlaties izdzēst ierakstu
+            <strong>{{ food_entry.name }}</strong>
+        </p>
+
+        <ul>
+            <li>
+                Daudzums: {{ food_entry.quantity_grams }} g
+            </li>
+
+            <li>
+                Kopā: 
+                {{ food_entry.total_calories|floatformat:2 }} kcal
+            </li>
+
+            <li>
+                Laiks: 
+                {{ food_entry.consumed_at|date:"d.m.Y. H:i" }}
+            </li>
+        </ul>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <button type="submit">
+                Dzēst
+            </button>
+
+            <a href="{% url 'calories:dashboard' %}">
+                Atcelt
+            </a>
+        </form>
+    </section>
+{% endblock %}]

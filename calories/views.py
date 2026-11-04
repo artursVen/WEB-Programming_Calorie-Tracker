@@ -90,3 +90,32 @@ def edit_food_entry(request, entry_id):
         "calories/edit_entry.html",
         context,
     )
+    
+@login_required
+def delete_food_entry(request, entry_id):
+    food_entry = get_object_or_404(
+        FoodEntry,
+        id=entry_id,
+        user=request.user,
+    )
+    
+    if request.method == "POST":
+        entry_name = food_entry.name
+        food_entry.delete()
+        
+        messages.success(
+            request,
+            f'Pārtikas ieraksts "{entry_name}" veiksmīgi dzēsts.',
+        )
+        
+        return redirect("calories:dashboard")
+    
+    context = {
+        "food_entry": food_entry,
+    }
+    
+    return render(
+        request,
+        "calories/delete_entry.html",
+        context,
+    )
