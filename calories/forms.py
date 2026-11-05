@@ -34,7 +34,7 @@ class FoodEntryForm(forms.ModelForm):
             "calories_per_100g": forms.NumberInput(
                 attrs={
                     "class": "form-control",
-                    "min": "0.01",
+                    "min": "0",
                     "step": "0.01",
                 }
             ),

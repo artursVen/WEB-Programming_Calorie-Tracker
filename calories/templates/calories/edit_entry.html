@@ -1,4 +1,5 @@
 {% extends "calories/base.html" %}
+{% load static %}
 
 {% block title %}
     Rediģēt ierakstu
@@ -18,6 +19,8 @@
 
             {{ form.as_p }}
 
+            {% include "calories/calorie_preview.html" %}
+
             <button type="submit">
                 Saglabāt izmaiņas
             </button>
@@ -27,4 +30,8 @@
             </a>
         </form>
     </section>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'calories/js/calorie_preview.js' %}" defer></script>
 {% endblock %}

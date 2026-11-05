@@ -1,4 +1,5 @@
 {% extends "calories/base.html" %}
+{% load static %}
 
 {% block title %}
     Dienas kalorijas
@@ -32,6 +33,8 @@
             {% csrf_token %}
 
             {{ form.as_p }}
+
+            {% include "calories/calorie_preview.html" %}
 
             <button type="submit">Pievienot ierakstu</button>
         </form>
@@ -90,4 +93,9 @@
             </p>
         {% endif %}
     </section>
+{% endblock %}
+
+{% block extra_js %}
+    <script 
+        src="{% static 'calories/js/calorie_preview.js' %}" defer></script>
 {% endblock %}
