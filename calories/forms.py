@@ -54,9 +54,9 @@ class FoodEntryForm(forms.ModelForm):
             ),  
         }
         
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
             
-            self.fields["consumed_at"].input_formats = [
-                "%Y-%m-%dT%H:%M",
-            ]
+        self.fields["consumed_at"].input_formats = [
+            "%Y-%m-%dT%H:%M",
+        ]

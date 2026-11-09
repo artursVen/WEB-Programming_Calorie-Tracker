@@ -52,41 +52,47 @@
         <h2>Šodienas pārtikas ieraksti</h2>
 
         {% if food_entries %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Produkts</th>
-                        <th>Maltīte</th>
-                        <th>Daudzums gramos</th>
-                        <th>Kalorijas uz 100g</th>
-                        <th>Kopā kcal</th>
-                        <th>Laiks</th>
-                        <th>Darbības</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {% for entry in food_entries %}
+            <div class="table-wrapper">
+                <table>
+                    <thead>
                         <tr>
-                            <td>{{ entry.name }}</td>
-                            <td>{{ entry.get_meal_type_display }}</td>
-                            <td>{{ entry.quantity_grams }} g</td>
-                            <td>{{ entry.calories_per_100g }} kcal</td>
-                            <td>{{ entry.total_calories|floatformat:2 }}</td>
-                            <td>{{ entry.consumed_at|date:"H:i" }}</td>
-                            <td>
-                                <a href="{% url 'calories:edit_entry' entry.id %}">
-                                    Rediģēt
-                                </a>
-
-                                <a href="{% url 'calories:delete_entry' entry.id %}">
-                                    Dzēst
-                                </a>
-                            </td>
+                            <th>Produkts</th>
+                            <th>Maltīte</th>
+                            <th>Daudzums gramos</th>
+                            <th>Kalorijas uz 100g</th>
+                            <th>Kopā kcal</th>
+                            <th>Laiks</th>
+                            <th>Darbības</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tbody>
+                        {% for entry in food_entries %}
+                            <tr>
+                                <td>{{ entry.name }}</td>
+                                <td>{{ entry.get_meal_type_display }}</td>
+                                <td>{{ entry.quantity_grams }} g</td>
+                                <td>{{ entry.calories_per_100g }} kcal</td>
+                                <td>{{ entry.total_calories|floatformat:2 }}</td>
+                                <td>{{ entry.consumed_at|date:"H:i" }}</td>
+                                <td>
+                                    <a 
+                                        class="action-link action-edit"
+                                        href="{% url 'calories:edit_entry' entry.id %}">
+                                        Rediģēt
+                                    </a>
+
+                                    <a 
+                                        class="action-link action-delete"
+                                        href="{% url 'calories:delete_entry' entry.id %}">
+                                        Dzēst
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         {% else %}
             <p>
                 Šodien vēl nav pievienots neviens pārtikas ieraksts.

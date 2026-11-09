@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="lv">
     <head>
@@ -12,6 +13,11 @@
                 Kaloriju skaitītājs
             {% endblock %}
         </title>
+
+        <link
+            rel="stylesheet"
+            href="{% static 'calories/css/style.css' %}?v=2"
+        >
     </head>
 
     <body>
@@ -19,7 +25,7 @@
             <h1>Kaloriju skaitītājs</h1>
 
             {% if user.is_authenticated %}
-                <div>
+                <div class="user-menu">
                     <span>
                         Lietotājs: {{ user.username}}
                     </span>
@@ -45,7 +51,8 @@
 
         <footer>
             <p>
-                WADT laboratorijas darbs Nr. 2
+                WADT laboratorijas darbs Nr. 2<br>
+                TSI 2026
             </p>
         </footer>
 
