@@ -27,3 +27,49 @@ jobs:
 
       - name: Check formatting
         run: python -m ruff format --check .
+
+  tests:
+    name: Django tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: calorie_ci
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ci_test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d calorie_ci"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      SECRET_KEY: "django-ci-only-test-key"
+      DEBUG: "False"
+      DB_NAME: calorie_ci
+      DB_USER: postgres
+      DB_PASSWORD: ci_test_password
+      DB_HOST: "127.0.0.1"
+      DB_PORT: "5432"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Check Django configuration
+        run: python manage.py check
+
+      - name: Run Django tests
+        run: python manage.py test calories --noinput
