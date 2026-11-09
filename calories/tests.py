@@ -51,7 +51,7 @@ class FoodEntryDeletionTests(TestCase):
         for method in (self.client.get, self.client.post):
             self.assertRedirects(
                 method(self.url),
-                f'{reverse("login")}?next={self.url}',
+                f"{reverse('login')}?next={self.url}",
             )
         self.assertTrue(FoodEntry.objects.filter(pk=self.entry.pk).exists())
 
